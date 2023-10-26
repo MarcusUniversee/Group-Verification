@@ -1,0 +1,33 @@
+G := Group((1,2,3,4,5,6,7,8,9,10), (1,2));
+A := Subgroup(G, [(1,2,3,4),(1,2),(5,6,7),(5,6),(8,9)]);
+B := Subgroup(G, [(1,5,8,10),(1,5),(2,6,9),(2,6),(3,7)]);
+C := Subgroup(G, [(4,7,9,10),(4,7),(3,6,8),(3,6),(2,5)]);
+CP1 := Cartesian(List(B), List(C));
+Apply(CP1, x->x[1]*x[2]);
+CP1U := Unique(CP1);
+CP1 := Cartesian(CP1U, List(A));
+Apply(CP1, x->x[1]*x[2]);
+CP1U := Unique(CP1);
+CP2 := Cartesian(List(C), List(B));
+Apply(CP2, x->x[1]*x[2]);
+CP2U := Unique(CP2);
+CP2 := Cartesian(CP2U, List(A));
+Apply(CP2, x->x[1]*x[2]);
+CP2U := Unique(CP2);
+CP := Concatenation(CP1U, CP2U);
+CPU := Unique(CP);
+SuccessCount := 0;
+for m in G do
+	if m in CPU then
+		Print(m);
+		Print(" failed\n");
+	else
+		Print(m);
+		Print("SUCCESS\n\n");
+		SuccessCount := SuccessCount+1;
+	fi;
+od;
+Print("Size of Group: ");
+Print(Size(G));
+Print("\nAmount of Successes: ");
+Print(SuccessCount);

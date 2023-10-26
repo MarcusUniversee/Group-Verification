@@ -1,0 +1,28 @@
+G := Group((1,2,3,4,5,6), (1,2));
+A := Subgroup(G, [(1,2,3),(4,5),(1,2)]);
+B := Subgroup(G, [(1,4,6),(2,5),(1,4)]);
+C := Subgroup(G, [(3,5,6),(2,4),(3,5)]);
+CP1 := Cartesian(List(B), List(C), List(A));
+CP2 := Cartesian(List(C), List(B), List(A));
+Apply(CP1, x->x[1]*x[2]*x[3]);
+Apply(CP2, x->x[1]*x[2]*x[3]);
+CP := Concatenation(CP1, CP2);
+CPU := Unique(CP);
+Print("BCA & CBA: \n");
+Print(CPU);
+SuccessCount := 0;
+Print("Iterating through all elements of G: \n");
+for m in G do
+	if m in CPU then
+		Print(m);
+		Print(" failed\n");
+	else
+		Print(m);
+		Print("SUCCESS\n\n");
+		SuccessCount := SuccessCount+1;
+	fi;
+od;
+Print("Size of Group: ");
+Print(Size(G));
+Print("\nAmount of Successes: ");
+Print(SuccessCount);
